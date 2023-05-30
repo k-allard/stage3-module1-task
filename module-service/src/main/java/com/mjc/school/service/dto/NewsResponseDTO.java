@@ -1,8 +1,8 @@
-package com.mjc.school.dto;
+package com.mjc.school.service.dto;
 
 import java.time.LocalDateTime;
 
-public class News {
+public class NewsResponseDTO {
     Long id;
     String title;
     String content;
