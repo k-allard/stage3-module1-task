@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 public class TerminalCommandsReader {
 
+    private static final String PROMPT_ENTER_NUMBER_OF_OPERATION
+            = "Enter the number of operation:";
+
     public Optional<Command> getCommand() {
         printCommandPrompt();
         Scanner sc = new Scanner(System.in);
@@ -21,22 +24,23 @@ public class TerminalCommandsReader {
     }
 
     private Command getCommandByCode(int commandCode) {
-        for (Command c : Command.values()) {
-            if (c.code == commandCode)
-                return c;
+        for (Command cmd : Command.values()) {
+            if (cmd.code == commandCode)
+                return cmd;
         }
         return null;
     }
 
     private void printCommandPrompt() {
-        System.out.print("""
-                Enter the number of operation:
-                1 - Get all news.
-                2 - Get news by id.
-                3 - Create news.
-                4 - Update news.
-                5 - Remove news by id.
-                0 - Exit.
-                """);
+        StringBuilder sb = new StringBuilder();
+        sb.append(PROMPT_ENTER_NUMBER_OF_OPERATION).append('\n');
+        for (Command cmd : Command.values()) {
+            sb
+                    .append(cmd.code)
+                    .append(" - ")
+                    .append(cmd.description)
+                    .append('\n');
+        }
+        System.out.print(sb);
     }
 }
