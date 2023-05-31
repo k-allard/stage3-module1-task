@@ -1,16 +1,19 @@
 package com.mjc.school;
 
 public enum Command {
-    GET_ALL(1),
-    GET_BY_ID(2),
-    CREATE(3),
-    UPDATE(4),
-    REMOVE_BY_ID(5),
-    EXIT(0);
+    GET_ALL(1, "Get all news."),
+    GET_BY_ID(2, "Get news by id."),
+    CREATE(3, "Create news."),
+    UPDATE(4, "Update news."),
+    REMOVE_BY_ID(5, "Remove news by id."),
+    EXIT(0, "Exit.");
 
     public final int code;
 
-    Command(int code) {
+    public final String description;
+
+    Command(int code, String description) {
         this.code = code;
+        this.description = description;
     }
 }
