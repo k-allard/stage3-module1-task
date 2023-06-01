@@ -6,11 +6,12 @@ import java.util.Scanner;
 public class TerminalCommandsReader {
 
     private static final String PROMPT_ENTER_NUMBER_OF_OPERATION
-            = "Enter the number of operation:";
+            = "____________________________\nEnter the number of operation:";
+
+    Scanner sc = new Scanner(System.in);
 
     public Optional<Command> getCommand() {
         printCommandPrompt();
-        Scanner sc = new Scanner(System.in);
         if (sc.hasNextLine()) {
             try {
                 int commandCode = Integer.parseInt(sc.nextLine());
@@ -21,6 +22,11 @@ public class TerminalCommandsReader {
             }
         }
         return Optional.empty();
+    }
+
+    public String getResponseByPrompt(String prompt) {
+        System.out.println(prompt);
+        return sc.nextLine();
     }
 
     private Command getCommandByCode(int commandCode) {

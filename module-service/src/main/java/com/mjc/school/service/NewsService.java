@@ -1,4 +1,4 @@
-package com.mjc.school.controller;
+package com.mjc.school.service;
 
 import com.mjc.school.service.dto.NewsCreateDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
@@ -6,8 +6,7 @@ import com.mjc.school.service.dto.NewsUpdateDTORequest;
 
 import java.util.List;
 
-public interface NewsController {
-
+public interface NewsService {
     List<NewsDTOResponse> getAllNews();
 
     NewsDTOResponse getNewsById(Long id);
@@ -17,5 +16,4 @@ public interface NewsController {
     NewsDTOResponse updateNews(NewsUpdateDTORequest news);
 
     boolean removeNews(Long id);
-
 }
