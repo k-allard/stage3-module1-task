@@ -1,6 +1,8 @@
 package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.NewsController;
+import com.mjc.school.service.exceptions.AuthorNotFoundException;
+import com.mjc.school.service.exceptions.NewsNotFoundException;
 import com.mjc.school.service.NewsService;
 import com.mjc.school.service.NewsServiceImpl;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
@@ -20,7 +22,7 @@ public class NewsControllerImpl implements NewsController {
     }
 
     @Override
-    public NewsDTOResponse getNewsById(Long id) {
+    public NewsDTOResponse getNewsById(Long id) throws NewsNotFoundException {
         return newsService.getNewsById(id);
     }
 
@@ -30,12 +32,13 @@ public class NewsControllerImpl implements NewsController {
     }
 
     @Override
-    public NewsDTOResponse updateNews(NewsUpdateDTORequest news) {
+    public NewsDTOResponse updateNews(NewsUpdateDTORequest news)
+            throws AuthorNotFoundException, NewsNotFoundException {
         return newsService.updateNews(news);
     }
 
     @Override
-    public boolean removeNews(Long id) {
+    public boolean removeNews(Long id) throws NewsNotFoundException {
         return newsService.removeNews(id);
     }
 }

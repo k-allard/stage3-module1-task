@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class TerminalCommandsReader {
 
     private static final String PROMPT_ENTER_NUMBER_OF_OPERATION
-            = "____________________________\nEnter the number of operation:";
+            = "_____________________________\n" +
+            "Enter the number of operation:";
 
     Scanner sc = new Scanner(System.in);
 
@@ -24,7 +25,7 @@ public class TerminalCommandsReader {
         return Optional.empty();
     }
 
-    public String getResponseByPrompt(String prompt) {
+    public String requestResponseByPrompt(String prompt) {
         System.out.println(prompt);
         return sc.nextLine();
     }

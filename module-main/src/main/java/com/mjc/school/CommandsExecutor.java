@@ -2,7 +2,9 @@ package com.mjc.school;
 
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.controller.impl.NewsControllerImpl;
-import com.mjc.school.exceptions.ShouldBeNumberException;
+import com.mjc.school.exceptions.IdShouldBeNumberException;
+import com.mjc.school.service.exceptions.AuthorNotFoundException;
+import com.mjc.school.service.exceptions.NewsNotFoundException;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
@@ -13,7 +15,9 @@ public class CommandsExecutor {
 
     TerminalCommandsReader commandsReader = new TerminalCommandsReader();
 
-    public void executeCommand(Command command) throws ShouldBeNumberException {
+    public void executeCommand(Command command)
+            throws IdShouldBeNumberException, NewsNotFoundException,
+            AuthorNotFoundException {
         if (command == Command.EXIT)
             System.exit(0);
         System.out.print("Operation: ");
@@ -27,50 +31,58 @@ public class CommandsExecutor {
             case GET_BY_ID -> {
                 long id;
                 try {
-                    id = Long.parseLong(commandsReader.getResponseByPrompt("Enter news id:"));
+                    id = Long.parseLong(
+                            commandsReader.requestResponseByPrompt("Enter news id:"));
                 } catch (NumberFormatException e) {
-                    throw new ShouldBeNumberException("News Id should be number", e);
+                    throw new IdShouldBeNumberException("News Id should be number", e);
                 }
                 System.out.println(newsController.getNewsById(id));
 
             }
-            case CREATE -> {
-                // TODO move duplicate code somewhere
-                String title = commandsReader.getResponseByPrompt("Enter news title:");
-                String content = commandsReader.getResponseByPrompt("Enter news content:");
-                long authorId;
-                try {
-                    authorId = Long.parseLong(commandsReader.getResponseByPrompt("Enter author id:"));
-                } catch (NumberFormatException e) {
-                    throw new ShouldBeNumberException("Author Id should be number", e);
-                }
-                System.out.println(newsController.createNews(new NewsCreateDTORequest(title, content, authorId)));
-
-            }
+            case CREATE -> System.out.println(
+                    newsController.createNews(
+                            new NewsCreateDTORequest(
+                                    requestNewsTitle(),
+                                    requestNewsContent(),
+                                    requestAuthorId()
+                            )));
             case UPDATE -> {
-                Long newsId = Long.parseLong(commandsReader.getResponseByPrompt("Enter news id:"));
-                // TODO move duplicate code somewhere
-                String title = commandsReader.getResponseByPrompt("Enter news title:");
-                String content = commandsReader.getResponseByPrompt("Enter news content:");
-                long authorId;
-                try {
-                    authorId = Long.parseLong(commandsReader.getResponseByPrompt("Enter author id:"));
-                } catch (NumberFormatException e) {
-                    throw new ShouldBeNumberException("Author Id should be number", e);
-                }
-                System.out.println(newsController.updateNews(new NewsUpdateDTORequest(newsId, title, content, authorId)));
-
+                Long newsId = Long.parseLong(
+                        commandsReader.requestResponseByPrompt("Enter news id:"));
+                System.out.println(
+                        newsController.updateNews(
+                                new NewsUpdateDTORequest(
+                                        newsId,
+                                        requestNewsTitle(),
+                                        requestNewsContent(),
+                                        requestAuthorId()
+                                )));
             }
             case REMOVE_BY_ID -> {
                 long newsId;
                 try {
-                    newsId = Long.parseLong(commandsReader.getResponseByPrompt("Enter news id:"));
+                    newsId = Long.parseLong(commandsReader.requestResponseByPrompt("Enter news id:"));
                 } catch (NumberFormatException e) {
-                    throw new ShouldBeNumberException("News Id should be number", e);
+                    throw new IdShouldBeNumberException("News Id should be number", e);
                 }
                 System.out.println(newsController.removeNews(newsId));
-
             }
         }
+    }
+
+    private long requestAuthorId() {
+        try {
+            return Long.parseLong(commandsReader.requestResponseByPrompt("Enter author id:"));
+        } catch (NumberFormatException e) {
+            throw new IdShouldBeNumberException("Author Id should be number", e);
+        }
+    }
+
+    private String requestNewsContent() {
+        return commandsReader.requestResponseByPrompt("Enter news content:");
+    }
+
+    private String requestNewsTitle() {
+        return commandsReader.requestResponseByPrompt("Enter news title:");
     }
 }
