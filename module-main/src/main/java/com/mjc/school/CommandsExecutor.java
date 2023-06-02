@@ -3,6 +3,7 @@ package com.mjc.school;
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.controller.impl.NewsControllerImpl;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
+import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
 
 public class CommandsExecutor {
@@ -18,7 +19,9 @@ public class CommandsExecutor {
         System.out.println(command.description);
         switch (command) {
             case GET_ALL: {
-                System.out.println(newsController.getAllNews());    //TODO print list with linebreaks
+                for (NewsDTOResponse news : newsController.getAllNews()) {
+                    System.out.println(news);
+                }
                 break;
             }
             case GET_BY_ID: {
