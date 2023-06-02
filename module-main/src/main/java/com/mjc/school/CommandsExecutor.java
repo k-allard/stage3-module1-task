@@ -18,8 +18,10 @@ public class CommandsExecutor {
     public void executeCommand(Command command)
             throws IdShouldBeNumberException, NewsNotFoundException,
             AuthorNotFoundException {
+
         if (command == Command.EXIT)
             System.exit(0);
+
         System.out.print("Operation: ");
         System.out.println(command.description);
         switch (command) {
@@ -28,17 +30,10 @@ public class CommandsExecutor {
                     System.out.println(news);
                 }
             }
-            case GET_BY_ID -> {
-                long id;
-                try {
-                    id = Long.parseLong(
-                            commandsReader.requestResponseByPrompt("Enter news id:"));
-                } catch (NumberFormatException e) {
-                    throw new IdShouldBeNumberException("News Id should be number", e);
-                }
-                System.out.println(newsController.getNewsById(id));
-
-            }
+            case GET_BY_ID -> System.out.println(
+                    newsController.getNewsById(
+                            requestNewsId()
+                    ));
             case CREATE -> System.out.println(
                     newsController.createNews(
                             new NewsCreateDTORequest(
@@ -46,27 +41,26 @@ public class CommandsExecutor {
                                     requestNewsContent(),
                                     requestAuthorId()
                             )));
-            case UPDATE -> {
-                Long newsId = Long.parseLong(
-                        commandsReader.requestResponseByPrompt("Enter news id:"));
-                System.out.println(
-                        newsController.updateNews(
-                                new NewsUpdateDTORequest(
-                                        newsId,
-                                        requestNewsTitle(),
-                                        requestNewsContent(),
-                                        requestAuthorId()
-                                )));
-            }
-            case REMOVE_BY_ID -> {
-                long newsId;
-                try {
-                    newsId = Long.parseLong(commandsReader.requestResponseByPrompt("Enter news id:"));
-                } catch (NumberFormatException e) {
-                    throw new IdShouldBeNumberException("News Id should be number", e);
-                }
-                System.out.println(newsController.removeNews(newsId));
-            }
+            case UPDATE -> System.out.println(
+                    newsController.updateNews(
+                            new NewsUpdateDTORequest(
+                                    requestNewsId(),
+                                    requestNewsTitle(),
+                                    requestNewsContent(),
+                                    requestAuthorId()
+                            )));
+            case REMOVE_BY_ID -> System.out.println(
+                    newsController.removeNews(
+                            requestNewsId()
+                    ));
+        }
+    }
+
+    private long requestNewsId() {
+        try {
+            return Long.parseLong(commandsReader.requestResponseByPrompt("Enter news id:"));
+        } catch (NumberFormatException e) {
+            throw new IdShouldBeNumberException("News Id should be number", e);
         }
     }
 
