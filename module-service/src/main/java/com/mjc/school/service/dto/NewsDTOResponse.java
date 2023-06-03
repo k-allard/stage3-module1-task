@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @Getter
@@ -21,12 +22,15 @@ public class NewsDTOResponse {
 
     @Override
     public String toString() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
         return "NewsDTOResponse[" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", createDate=" + createDate +
-                ", lastUpdateDate=" + lastUpdateDate +  //TODO createDate and lastUpdateDate are printed not in the right format
+                ", createDate=" + formatter.format(createDate) +
+                ", lastUpdateDate=" + formatter.format(lastUpdateDate) +
                 ", authorId=" + authorId +
                 ']';
     }
