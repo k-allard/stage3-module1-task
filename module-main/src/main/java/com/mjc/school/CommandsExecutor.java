@@ -4,10 +4,12 @@ import com.mjc.school.controller.NewsController;
 import com.mjc.school.controller.impl.NewsControllerImpl;
 import com.mjc.school.exceptions.IdShouldBeNumberException;
 import com.mjc.school.service.exceptions.AuthorNotFoundException;
+import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.service.exceptions.NewsNotFoundException;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 public class CommandsExecutor {
 
@@ -15,9 +17,10 @@ public class CommandsExecutor {
 
     TerminalCommandsReader commandsReader = new TerminalCommandsReader();
 
-    public void executeCommand(Command command)
-            throws IdShouldBeNumberException, NewsNotFoundException,
-            AuthorNotFoundException {
+    public void executeCommand(Command command) throws
+            IdShouldBeNumberException, NewsNotFoundException,
+            AuthorNotFoundException, NewsTitleInvalidException,
+            NewsContentInvalidException {
 
         if (command == Command.EXIT)
             System.exit(0);

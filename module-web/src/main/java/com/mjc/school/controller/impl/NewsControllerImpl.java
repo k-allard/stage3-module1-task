@@ -2,12 +2,14 @@ package com.mjc.school.controller.impl;
 
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.service.exceptions.AuthorNotFoundException;
+import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.service.exceptions.NewsNotFoundException;
 import com.mjc.school.service.NewsService;
 import com.mjc.school.service.NewsServiceImpl;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 
 import java.util.List;
@@ -27,13 +29,17 @@ public class NewsControllerImpl implements NewsController {
     }
 
     @Override
-    public NewsDTOResponse createNews(NewsCreateDTORequest news) {
+    public NewsDTOResponse createNews(NewsCreateDTORequest news) throws
+            NewsTitleInvalidException, NewsContentInvalidException {
         return newsService.createNews(news);
     }
 
     @Override
-    public NewsDTOResponse updateNews(NewsUpdateDTORequest news)
-            throws AuthorNotFoundException, NewsNotFoundException {
+    public NewsDTOResponse updateNews(NewsUpdateDTORequest news) throws
+            AuthorNotFoundException,
+            NewsNotFoundException,
+            NewsTitleInvalidException,
+            NewsContentInvalidException {
         return newsService.updateNews(news);
     }
 

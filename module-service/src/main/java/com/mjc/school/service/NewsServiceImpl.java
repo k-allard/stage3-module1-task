@@ -7,17 +7,21 @@ import com.mjc.school.service.dto.NewsCreateDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
 import com.mjc.school.service.exceptions.AuthorNotFoundException;
+import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.service.exceptions.NewsNotFoundException;
+import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 import com.mjc.school.service.mapper.NewsModelDTOMapper;
+import com.mjc.school.service.validator.NewsRequestDTOValidator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO: service must also validate all incoming fields
 public class NewsServiceImpl implements NewsService {
 
     private final NewsModelDTOMapper mapper = new NewsModelDTOMapper();
+
+    private final NewsRequestDTOValidator validator = new NewsRequestDTOValidator();
 
     private Long idSequence = 20L;  //TODO maybe do it dynamically calculated ?
 
@@ -43,7 +47,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDTOResponse createNews(NewsCreateDTORequest news) {
+    public NewsDTOResponse createNews(NewsCreateDTORequest news) throws
+            NewsTitleInvalidException,
+            NewsContentInvalidException {
+        validator.validateNewsCreateDTORequest(news);
+
         NewsDTOResponse newNews =
                 new NewsDTOResponse(
                         generateId(),
@@ -64,8 +72,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDTOResponse updateNews(NewsUpdateDTORequest news)
-            throws NewsNotFoundException, AuthorNotFoundException {
+    public NewsDTOResponse updateNews(NewsUpdateDTORequest news) throws
+            NewsNotFoundException,
+            AuthorNotFoundException,
+            NewsTitleInvalidException,
+            NewsContentInvalidException {
+        validator.validateNewsUpdateDTORequest(news);
+
         List<News> newsModelList = DataSource.getInstance().getNewsList();
         int indexOfNews = newsModelList.indexOf(new News(news.getId()));
         if (indexOfNews == -1) {
