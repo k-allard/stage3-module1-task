@@ -5,7 +5,7 @@ import com.mjc.school.service.dto.NewsDTOResponse;
 import org.modelmapper.ModelMapper;
 
 public class NewsModelDTOMapper {
-    ModelMapper mapper = new ModelMapper();
+    private final ModelMapper mapper = new ModelMapper();
 
     public NewsDTOResponse mapModelToDto(News news) {
         return mapper.map(news, NewsDTOResponse.class);

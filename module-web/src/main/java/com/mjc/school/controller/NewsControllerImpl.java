@@ -29,7 +29,7 @@ public class NewsControllerImpl implements NewsController {
 
     @Override
     public NewsDTOResponse createNews(NewsCreateDTORequest news) throws
-            NewsTitleInvalidException, NewsContentInvalidException {
+            NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException {
         return newsService.createNews(news);
     }
 

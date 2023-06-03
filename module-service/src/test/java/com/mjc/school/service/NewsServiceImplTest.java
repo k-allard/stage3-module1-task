@@ -29,7 +29,7 @@ class NewsServiceImplTest {
             "is sensationalism, the disproportionate focus on, and exaggeration of, emotive stories for public " +
             "consumption. This news is also not unrelated to gossip, the human practice of sharing information.";
 
-    NewsService newsService = new NewsServiceImpl();
+    private final NewsService newsService = new NewsServiceImpl();
 
     @Test
     @DisplayName("getAllNews() returns initial list of news")

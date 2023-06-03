@@ -13,9 +13,9 @@ import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 public class CommandsExecutor {
 
-    NewsController newsController = new NewsControllerImpl();
+    private final NewsController newsController = new NewsControllerImpl();
 
-    TerminalCommandsReader commandsReader = new TerminalCommandsReader();
+    private final TerminalCommandsReader commandsReader = new TerminalCommandsReader();
 
     public void executeCommand(Command command) throws
             IdShouldBeNumberException, NewsNotFoundException,

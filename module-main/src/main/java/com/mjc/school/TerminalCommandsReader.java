@@ -9,7 +9,7 @@ public class TerminalCommandsReader {
             = "_____________________________\n" +
             "Enter the number of operation:";
 
-    Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     public Optional<Command> getCommand() {
         printCommandPrompt();
