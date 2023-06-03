@@ -1,9 +1,10 @@
-package com.mjc.school.service;
+package com.mjc.school.service.impl;
 
 import com.mjc.school.repository.NewsRepository;
-import com.mjc.school.repository.NewsRepositoryImpl;
+import com.mjc.school.repository.impl.NewsRepositoryImpl;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
+import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
 import com.mjc.school.service.dto.NewsDTOResponse;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;

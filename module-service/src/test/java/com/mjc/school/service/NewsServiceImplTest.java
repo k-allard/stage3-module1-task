@@ -7,6 +7,7 @@ import com.mjc.school.service.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.service.exceptions.NewsNotFoundException;
 import com.mjc.school.service.exceptions.NewsTitleInvalidException;
+import com.mjc.school.service.impl.NewsServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

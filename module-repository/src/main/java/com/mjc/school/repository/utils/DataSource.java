@@ -1,4 +1,4 @@
-package com.mjc.school.repository;
+package com.mjc.school.repository.utils;
 
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class DataSource {
+public class DataSource {
     @Getter
     private final List<News> newsList;
 
@@ -16,7 +16,7 @@ class DataSource {
 
     private final AtomicInteger idSequence = new AtomicInteger(0);
 
-    DataSource() {
+    public DataSource() {
         DataInitializer dataInitializer = new DataInitializer(idSequence);
         authorList = dataInitializer.initializeAuthorList();
         newsList = dataInitializer.initializeNewsList(authorList);
