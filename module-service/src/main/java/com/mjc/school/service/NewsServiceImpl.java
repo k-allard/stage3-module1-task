@@ -1,6 +1,7 @@
 package com.mjc.school.service;
 
 import com.mjc.school.repository.DataSource;
+import com.mjc.school.repository.NewsIdSequence;
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import com.mjc.school.service.dto.NewsCreateDTORequest;
@@ -22,8 +23,6 @@ public class NewsServiceImpl implements NewsService {
     private final NewsModelDTOMapper mapper = new NewsModelDTOMapper();
 
     private final NewsRequestDTOValidator validator = new NewsRequestDTOValidator();
-
-    private Long idSequence = 20L;  //TODO maybe do it dynamically calculated ?
 
     @Override
     public List<NewsDTOResponse> getAllNews() {
@@ -54,7 +53,7 @@ public class NewsServiceImpl implements NewsService {
 
         NewsDTOResponse newNews =
                 new NewsDTOResponse(
-                        generateId(),
+                        (long) NewsIdSequence.getNextIdVal(),
                         news.getTitle(),
                         news.getContent(),
                         LocalDateTime.now(),
@@ -64,11 +63,6 @@ public class NewsServiceImpl implements NewsService {
                 mapper.mapDtoToModel(newNews)
         );
         return newNews;
-    }
-
-    private Long generateId() {
-        idSequence++;
-        return idSequence;
     }
 
     @Override

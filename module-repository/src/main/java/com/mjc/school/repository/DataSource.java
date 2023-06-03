@@ -6,6 +6,7 @@ import com.mjc.school.repository.model.News;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataSource {
 

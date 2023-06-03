@@ -26,15 +26,14 @@ public class DataInitializer {
         List<String> titlesLines = readLinesFromFile(FILENAME_NEWS_TITLES);
         List<String> contentLines = readLinesFromFile(FILENAME_NEWS_CONTENT);
 
-        int idSequence = 0;
         for (String titleLine : titlesLines) {
-            idSequence++;
+            int id = NewsIdSequence.getNextIdVal();
             String title = titleLine.substring(0, titleLine.indexOf(','));
-            String content = contentLines.get(idSequence - 1);
+            String content = contentLines.get(id - 1);
             int authorId = Integer.parseInt(titleLine.substring(titleLine.indexOf(',') + 1).trim());
             newsList.add(
                     new News(
-                            (long) idSequence,
+                            (long) id,
                             title,
                             content,
                             LocalDateTime.now(),
@@ -48,11 +47,11 @@ public class DataInitializer {
     @SneakyThrows
     public List<Author> initializeAuthorList() {
         List<Author> authorList = new ArrayList<>();
-        long idSequence = 0;
+        long authorIdSequence = 0;
         List<String> lines = readLinesFromFile(FILENAME_AUTHORS);
 
         for (String line : lines) {
-            authorList.add(new Author(++idSequence, line));
+            authorList.add(new Author(++authorIdSequence, line));
         }
 
         return authorList;
