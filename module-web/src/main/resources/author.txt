@@ -1,13 +1,13 @@
-1, Toni Morrison
-2, Virginia Woolf
-3, Alice Walker
-4, Sylvia Plath
-5, Harper Lee
-6, Maya Angelou
-7, Elizabeth Bowen
-8, Kate Chopin
-9, Judy Blume
-10, Agatha Christie
-11, Barbara Kingsolver
-12, Mary McCarthy
-13, Anne Rice
+Toni Morrison
+Virginia Woolf
+Alice Walker
+Sylvia Plath
+Harper Lee
+Maya Angelou
+Elizabeth Bowen
+Kate Chopin
+Judy Blume
+Agatha Christie
+Barbara Kingsolver
+Mary McCarthy
+Anne Rice
