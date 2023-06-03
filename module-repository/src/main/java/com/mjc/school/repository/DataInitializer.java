@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DataInitializer {
     private static final String FILENAME_AUTHORS = "/author.txt";
@@ -19,7 +20,11 @@ public class DataInitializer {
 
     private static final String FILENAME_NEWS_CONTENT = "/content.txt";
 
-    private final NewsRepository repository = new NewsRepositoryImpl();
+    AtomicInteger idSequence;
+
+    public DataInitializer(AtomicInteger idSequence) {
+        this.idSequence = idSequence;
+    }
 
     @SneakyThrows
     public List<News> initializeNewsList(List<Author> authorList) {
@@ -29,7 +34,7 @@ public class DataInitializer {
         List<String> contentLines = readLinesFromFile(FILENAME_NEWS_CONTENT);
 
         for (String titleLine : titlesLines) {
-            int id = repository.getNextNewsId();
+            int id = idSequence.incrementAndGet();
             String title = titleLine.substring(0, titleLine.indexOf(','));
             String content = contentLines.get(id - 1);
             int authorId = Integer.parseInt(titleLine.substring(titleLine.indexOf(',') + 1).trim());

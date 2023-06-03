@@ -15,7 +15,7 @@ public interface NewsService {
 
     NewsDTOResponse getNewsById(Long id) throws NewsNotFoundException;
 
-    NewsDTOResponse createNews(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException;
+    NewsDTOResponse createNews(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
 
     NewsDTOResponse updateNews(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 

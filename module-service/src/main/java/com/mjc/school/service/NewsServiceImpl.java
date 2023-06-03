@@ -37,21 +37,18 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsDTOResponse getNewsById(Long id) throws NewsNotFoundException {
-        List<News> newsModelList = repository.getNewsList();
-        int indexOfNews = newsModelList.indexOf(new News(id));
-        if (indexOfNews == -1) {
-            throw new NewsNotFoundException("News with id %d does not exist."
-                    .formatted(id));
-        }
-        News newsModel = newsModelList.get(indexOfNews);
+        int indexOfNews = checkNewsId(id);
+        News newsModel = repository.getNewsList().get(indexOfNews);
         return mapper.mapModelToDto(newsModel);
     }
 
     @Override
     public NewsDTOResponse createNews(NewsCreateDTORequest news) throws
             NewsTitleInvalidException,
-            NewsContentInvalidException {
+            NewsContentInvalidException, AuthorNotFoundException {
+
         validator.validateNewsCreateDTORequest(news);
+        checkAuthorId(news.getAuthorId());
 
         NewsDTOResponse newNews =
                 new NewsDTOResponse(
@@ -73,36 +70,43 @@ public class NewsServiceImpl implements NewsService {
             AuthorNotFoundException,
             NewsTitleInvalidException,
             NewsContentInvalidException {
+
         validator.validateNewsUpdateDTORequest(news);
 
-        List<News> newsModelList = repository.getNewsList();
-        int indexOfNews = newsModelList.indexOf(new News(news.getId()));
-        if (indexOfNews == -1) {
-            throw new NewsNotFoundException("News with id %d does not exist."
-                    .formatted(news.getId()));
-        }
-        News newsModel = newsModelList.get(indexOfNews);
+        int indexOfNews = checkNewsId(news.getId());
+        News newsModel = repository.getNewsList().get(indexOfNews);
         newsModel.setTitle(news.getTitle());
         newsModel.setContent(news.getContent());
-        List<Author> authorList = repository.getAuthorList();
-        int indexOfAuthor = authorList.indexOf(new Author(news.getAuthorId()));
-        if (indexOfAuthor == -1) {
-            throw new AuthorNotFoundException("Author Id does not exist. Author Id is: %d"
-                    .formatted(news.getAuthorId()));
-        }
-        newsModel.setAuthor(authorList.get(indexOfAuthor));
+        int indexOfAuthor = checkAuthorId(news.getAuthorId());
+        newsModel.setAuthor(repository.getAuthorList().get(indexOfAuthor));
         newsModel.setLastUpdateDate(LocalDateTime.now());
+
         return mapper.mapModelToDto(newsModel);
     }
 
     @Override
     public boolean removeNews(Long id) throws NewsNotFoundException {
         List<News> newsModelList = repository.getNewsList();
-        int indexOfNews = newsModelList.indexOf(new News(id));
+        checkNewsId(id);
+        return newsModelList.remove(new News(id));
+    }
+
+    private int checkAuthorId(Long authorId) throws AuthorNotFoundException {
+        int indexOfAuthor = repository.getAuthorList().indexOf(new Author(authorId));
+        if (indexOfAuthor == -1) {
+            throw new AuthorNotFoundException("Author Id does not exist. Author Id is: %d"
+                    .formatted(authorId));
+        }
+        return indexOfAuthor;
+    }
+
+    private int checkNewsId(Long newsId) throws NewsNotFoundException {
+        List<News> newsModelList = repository.getNewsList();
+        int indexOfNews = newsModelList.indexOf(new News(newsId));
         if (indexOfNews == -1) {
             throw new NewsNotFoundException("News with id %d does not exist."
-                    .formatted(id));
+                    .formatted(newsId));
         }
-        return newsModelList.remove(new News(id));
+        return indexOfNews;
     }
 }
