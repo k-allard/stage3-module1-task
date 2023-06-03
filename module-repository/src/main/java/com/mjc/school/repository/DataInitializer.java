@@ -19,6 +19,8 @@ public class DataInitializer {
 
     private static final String FILENAME_NEWS_CONTENT = "/content.txt";
 
+    private final NewsRepository repository = new NewsRepositoryImpl();
+
     @SneakyThrows
     public List<News> initializeNewsList(List<Author> authorList) {
         List<News> newsList = new ArrayList<>(20);
@@ -27,7 +29,7 @@ public class DataInitializer {
         List<String> contentLines = readLinesFromFile(FILENAME_NEWS_CONTENT);
 
         for (String titleLine : titlesLines) {
-            int id = NewsIdSequence.getNextIdVal();
+            int id = repository.getNextNewsId();
             String title = titleLine.substring(0, titleLine.indexOf(','));
             String content = contentLines.get(id - 1);
             int authorId = Integer.parseInt(titleLine.substring(titleLine.indexOf(',') + 1).trim());

@@ -1,6 +1,5 @@
-package com.mjc.school.controller.impl;
+package com.mjc.school.controller;
 
-import com.mjc.school.controller.NewsController;
 import com.mjc.school.service.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.service.exceptions.NewsNotFoundException;

@@ -1,14 +1,12 @@
 package com.mjc.school.repository;
 
-
 import com.mjc.school.repository.model.Author;
 import com.mjc.school.repository.model.News;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class DataSource {
+class DataSource {
 
     private static DataSource instance;
 

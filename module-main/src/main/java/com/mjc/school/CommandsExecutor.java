@@ -1,7 +1,7 @@
 package com.mjc.school;
 
 import com.mjc.school.controller.NewsController;
-import com.mjc.school.controller.impl.NewsControllerImpl;
+import com.mjc.school.controller.NewsControllerImpl;
 import com.mjc.school.exceptions.IdShouldBeNumberException;
 import com.mjc.school.service.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
