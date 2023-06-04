@@ -2,5 +2,6 @@ version = '0.0.1-SNAPSHOT'
 
 dependencies {
     implementation project(':module-repository')
+    implementation project(path: ':module-common')
     implementation 'org.modelmapper:modelmapper:3.0.0'
 }

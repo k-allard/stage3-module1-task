@@ -1,12 +1,12 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTOResponse;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
-import com.mjc.school.service.exceptions.AuthorNotFoundException;
-import com.mjc.school.service.exceptions.NewsContentInvalidException;
-import com.mjc.school.service.exceptions.NewsNotFoundException;
-import com.mjc.school.service.exceptions.NewsTitleInvalidException;
+import com.mjc.school.common.dto.NewsCreateDTORequest;
+import com.mjc.school.common.dto.NewsDTO;
+import com.mjc.school.common.dto.NewsUpdateDTORequest;
+import com.mjc.school.common.exceptions.AuthorNotFoundException;
+import com.mjc.school.common.exceptions.NewsContentInvalidException;
+import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.common.exceptions.NewsTitleInvalidException;
 import com.mjc.school.service.impl.NewsServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,14 +35,14 @@ class NewsServiceImplTest {
     @Test
     @DisplayName("getAllNews() returns initial list of news")
     void getAllNews() {
-        List<NewsDTOResponse> list = newsService.getAllNews();
+        List<NewsDTO> list = newsService.getAllNews();
         assertEquals(NEWS_INITIAL_NUMBER, list.size());
     }
 
     @Test
     @DisplayName("getNewsById() returns correct news")
     void getNewsByValidId() throws NewsNotFoundException {
-        NewsDTOResponse news = newsService.getNewsById(VALID_NEWS_ID);
+        NewsDTO news = newsService.getNewsById(VALID_NEWS_ID);
         assertEquals(VALID_NEWS_ID, news.getId());
     }
 
@@ -57,7 +57,7 @@ class NewsServiceImplTest {
     @DisplayName("createNews() returns new news")
     void createValidNewsAndCheckResponse() throws NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException {
-        NewsDTOResponse response = newsService.createNews(
+        NewsDTO response = newsService.createNews(
                 new NewsCreateDTORequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
         assertEquals(VALID_NEWS_TITLE, response.getTitle());
@@ -69,10 +69,10 @@ class NewsServiceImplTest {
     @DisplayName("createNews() saves new news")
     void createValidNewsAndCheckThatItWasWrittenToRepo() throws NewsTitleInvalidException,
             NewsContentInvalidException, NewsNotFoundException, AuthorNotFoundException {
-        NewsDTOResponse responseOfCreate = newsService.createNews(
+        NewsDTO responseOfCreate = newsService.createNews(
                 new NewsCreateDTORequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
-        NewsDTOResponse responseByGet = newsService.getNewsById(responseOfCreate.getId());
+        NewsDTO responseByGet = newsService.getNewsById(responseOfCreate.getId());
         assertEquals(VALID_NEWS_TITLE, responseByGet.getTitle());
         assertEquals(VALID_NEWS_CONTENT, responseByGet.getContent());
         assertEquals(VALID_AUTHOR_ID, responseOfCreate.getAuthorId());
@@ -103,7 +103,7 @@ class NewsServiceImplTest {
     @DisplayName("updateNews() returns updated news")
     void updateValidNewsAndCheckResponse() throws NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException, NewsNotFoundException {
-        NewsDTOResponse response = newsService.updateNews(
+        NewsDTO response = newsService.updateNews(
                 new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
         assertEquals(VALID_NEWS_ID, response.getId());
@@ -116,10 +116,10 @@ class NewsServiceImplTest {
     @DisplayName("updateNews() saves updates")
     void updateValidNewsAndCheckThatItWasWrittenToRepo() throws NewsTitleInvalidException,
             NewsContentInvalidException, NewsNotFoundException, AuthorNotFoundException {
-        NewsDTOResponse responseOfUpdate = newsService.updateNews(
+        NewsDTO responseOfUpdate = newsService.updateNews(
                 new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
-        NewsDTOResponse responseByGet = newsService.getNewsById(responseOfUpdate.getId());
+        NewsDTO responseByGet = newsService.getNewsById(responseOfUpdate.getId());
         assertEquals(VALID_NEWS_ID, responseByGet.getId());
         assertEquals(VALID_NEWS_TITLE, responseByGet.getTitle());
         assertEquals(VALID_NEWS_CONTENT, responseByGet.getContent());

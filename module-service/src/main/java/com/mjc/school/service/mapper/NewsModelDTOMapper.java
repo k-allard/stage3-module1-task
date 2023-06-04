@@ -1,18 +1,23 @@
 package com.mjc.school.service.mapper;
 
-import com.mjc.school.repository.model.News;
-import com.mjc.school.service.dto.NewsDTOResponse;
+import com.mjc.school.repository.model.NewsModel;
+import com.mjc.school.common.dto.NewsDTO;
+import com.mjc.school.common.dto.NewsUpdateDTORequest;
 import org.modelmapper.ModelMapper;
 
 public class NewsModelDTOMapper {
     private final ModelMapper mapper = new ModelMapper();
 
-    public NewsDTOResponse mapModelToDto(News news) {
-        return mapper.map(news, NewsDTOResponse.class);
+    public NewsDTO mapModelToDto(NewsModel newsModel) {
+        return mapper.map(newsModel, NewsDTO.class);
     }
 
-    public News mapDtoToModel(NewsDTOResponse news) {
-        return mapper.map(news, News.class);
+    public NewsModel mapDtoToModel(NewsDTO news) {
+        return mapper.map(news, NewsModel.class);
+    }
+
+    public NewsModel mapRequestDtoToModel(NewsUpdateDTORequest news) {
+        return mapper.map(news, NewsModel.class);
     }
 
 }

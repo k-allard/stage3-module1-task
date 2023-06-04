@@ -1,23 +1,23 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTOResponse;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
-import com.mjc.school.service.exceptions.AuthorNotFoundException;
-import com.mjc.school.service.exceptions.NewsContentInvalidException;
-import com.mjc.school.service.exceptions.NewsNotFoundException;
-import com.mjc.school.service.exceptions.NewsTitleInvalidException;
+import com.mjc.school.common.dto.NewsCreateDTORequest;
+import com.mjc.school.common.dto.NewsDTO;
+import com.mjc.school.common.dto.NewsUpdateDTORequest;
+import com.mjc.school.common.exceptions.AuthorNotFoundException;
+import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.common.exceptions.NewsContentInvalidException;
+import com.mjc.school.common.exceptions.NewsTitleInvalidException;
 
 import java.util.List;
 
 public interface NewsService {
-    List<NewsDTOResponse> getAllNews();
+    List<NewsDTO> getAllNews();
 
-    NewsDTOResponse getNewsById(Long id) throws NewsNotFoundException;
+    NewsDTO getNewsById(Long id) throws NewsNotFoundException;
 
-    NewsDTOResponse createNews(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
+    NewsDTO createNews(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
 
-    NewsDTOResponse updateNews(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
+    NewsDTO updateNews(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 
     boolean removeNews(Long id) throws NewsNotFoundException;
 }

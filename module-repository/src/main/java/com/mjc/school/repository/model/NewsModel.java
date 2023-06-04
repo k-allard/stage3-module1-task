@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Setter
-public class News {
+public class NewsModel {
     Long id;
     String title;
     String content;
@@ -20,7 +20,7 @@ public class News {
     LocalDateTime lastUpdateDate;
     Author author;
 
-    public News(Long id) {
+    public NewsModel(Long id) {
         this.id = id;
     }
 
@@ -30,8 +30,8 @@ public class News {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        News news = (News) o;
-        return id.equals(news.id);
+        NewsModel newsModel = (NewsModel) o;
+        return id.equals(newsModel.id);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.mjc.school.repository.utils;
 
 import com.mjc.school.repository.model.Author;
-import com.mjc.school.repository.model.News;
+import com.mjc.school.repository.model.NewsModel;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
@@ -27,8 +27,8 @@ public class DataInitializer {
     }
 
     @SneakyThrows
-    public List<News> initializeNewsList(List<Author> authorList) {
-        List<News> newsList = new ArrayList<>(20);
+    public List<NewsModel> initializeNewsList(List<Author> authorList) {
+        List<NewsModel> newsModelList = new ArrayList<>(20);
 
         List<String> titlesLines = readLinesFromFile(FILENAME_NEWS_TITLES);
         List<String> contentLines = readLinesFromFile(FILENAME_NEWS_CONTENT);
@@ -38,8 +38,8 @@ public class DataInitializer {
             String title = titleLine.substring(0, titleLine.indexOf(','));
             String content = contentLines.get(id - 1);
             int authorId = Integer.parseInt(titleLine.substring(titleLine.indexOf(',') + 1).trim());
-            newsList.add(
-                    new News(
+            newsModelList.add(
+                    new NewsModel(
                             (long) id,
                             title,
                             content,
@@ -48,7 +48,7 @@ public class DataInitializer {
                             authorList.get(authorId - 1)
                     ));
         }
-        return newsList;
+        return newsModelList;
     }
 
     @SneakyThrows

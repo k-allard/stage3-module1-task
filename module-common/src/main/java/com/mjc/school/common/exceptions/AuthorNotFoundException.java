@@ -1,4 +1,4 @@
-package com.mjc.school.service.exceptions;
+package com.mjc.school.common.exceptions;
 
 public class AuthorNotFoundException extends Exception {
     public AuthorNotFoundException(String errorMessage) {

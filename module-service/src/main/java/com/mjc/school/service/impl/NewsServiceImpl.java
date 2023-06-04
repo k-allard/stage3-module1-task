@@ -1,17 +1,16 @@
 package com.mjc.school.service.impl;
 
-import com.mjc.school.repository.NewsRepository;
-import com.mjc.school.repository.impl.NewsRepositoryImpl;
-import com.mjc.school.repository.model.Author;
-import com.mjc.school.repository.model.News;
+import com.mjc.school.repository.Repository;
+import com.mjc.school.repository.impl.RepositoryImpl;
+import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.NewsService;
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTOResponse;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
-import com.mjc.school.service.exceptions.AuthorNotFoundException;
-import com.mjc.school.service.exceptions.NewsContentInvalidException;
-import com.mjc.school.service.exceptions.NewsNotFoundException;
-import com.mjc.school.service.exceptions.NewsTitleInvalidException;
+import com.mjc.school.common.dto.NewsCreateDTORequest;
+import com.mjc.school.common.dto.NewsDTO;
+import com.mjc.school.common.dto.NewsUpdateDTORequest;
+import com.mjc.school.common.exceptions.AuthorNotFoundException;
+import com.mjc.school.common.exceptions.NewsContentInvalidException;
+import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.common.exceptions.NewsTitleInvalidException;
 import com.mjc.school.service.mapper.NewsModelDTOMapper;
 import com.mjc.school.service.validator.NewsRequestDTOValidator;
 
@@ -25,48 +24,45 @@ public class NewsServiceImpl implements NewsService {
 
     private final NewsRequestDTOValidator validator = new NewsRequestDTOValidator();
 
-    private final NewsRepository repository = new NewsRepositoryImpl();
+    private final Repository<NewsModel> repository = new RepositoryImpl();
 
     @Override
-    public List<NewsDTOResponse> getAllNews() {
-        List<NewsDTOResponse> newsDTOList = new ArrayList<>();
-        for (News news : repository.getNewsList()) {
-            newsDTOList.add(mapper.mapModelToDto(news));
+    public List<NewsDTO> getAllNews() {
+        List<NewsDTO> newsDTOList = new ArrayList<>();
+        for (NewsModel newsModel : repository.readAll()) {
+            newsDTOList.add(mapper.mapModelToDto(newsModel));
         }
         return newsDTOList;
     }
 
     @Override
-    public NewsDTOResponse getNewsById(Long id) throws NewsNotFoundException {
-        int indexOfNews = checkNewsId(id);
-        News newsModel = repository.getNewsList().get(indexOfNews);
+    public NewsDTO getNewsById(Long id) throws NewsNotFoundException {
+        NewsModel newsModel = repository.readById(id);
         return mapper.mapModelToDto(newsModel);
     }
 
     @Override
-    public NewsDTOResponse createNews(NewsCreateDTORequest news) throws
+    public NewsDTO createNews(NewsCreateDTORequest news) throws
             NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException {
 
         validator.validateNewsCreateDTORequest(news);
-        checkAuthorId(news.getAuthorId());
 
-        NewsDTOResponse newNews =
-                new NewsDTOResponse(
-                        (long) repository.getNextNewsId(),
+        NewsDTO newNews =
+                new NewsDTO(
+                        (long) repository.getNextId(),
                         news.getTitle(),
                         news.getContent(),
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         news.getAuthorId());
-        repository.getNewsList().add(
+        return mapper.mapModelToDto(repository.create(
                 mapper.mapDtoToModel(newNews)
-        );
-        return newNews;
+        ));
     }
 
     @Override
-    public NewsDTOResponse updateNews(NewsUpdateDTORequest news) throws
+    public NewsDTO updateNews(NewsUpdateDTORequest news) throws
             NewsNotFoundException,
             AuthorNotFoundException,
             NewsTitleInvalidException,
@@ -74,40 +70,14 @@ public class NewsServiceImpl implements NewsService {
 
         validator.validateNewsUpdateDTORequest(news);
 
-        int indexOfNews = checkNewsId(news.getId());
-        News newsModel = repository.getNewsList().get(indexOfNews);
-        newsModel.setTitle(news.getTitle());
-        newsModel.setContent(news.getContent());
-        int indexOfAuthor = checkAuthorId(news.getAuthorId());
-        newsModel.setAuthor(repository.getAuthorList().get(indexOfAuthor));
-        newsModel.setLastUpdateDate(LocalDateTime.now());
-
-        return mapper.mapModelToDto(newsModel);
+        return mapper.mapModelToDto(
+                repository.update(
+                        mapper.mapRequestDtoToModel(news)
+                ));
     }
 
     @Override
     public boolean removeNews(Long id) throws NewsNotFoundException {
-        List<News> newsModelList = repository.getNewsList();
-        checkNewsId(id);
-        return newsModelList.remove(new News(id));
-    }
-
-    private int checkAuthorId(Long authorId) throws AuthorNotFoundException {
-        int indexOfAuthor = repository.getAuthorList().indexOf(new Author(authorId));
-        if (indexOfAuthor == -1) {
-            throw new AuthorNotFoundException("Author Id does not exist. Author Id is: %d"
-                    .formatted(authorId));
-        }
-        return indexOfAuthor;
-    }
-
-    private int checkNewsId(Long newsId) throws NewsNotFoundException {
-        List<News> newsModelList = repository.getNewsList();
-        int indexOfNews = newsModelList.indexOf(new News(newsId));
-        if (indexOfNews == -1) {
-            throw new NewsNotFoundException("News with id %d does not exist."
-                    .formatted(newsId));
-        }
-        return indexOfNews;
+        return repository.deleteById(id);
     }
 }

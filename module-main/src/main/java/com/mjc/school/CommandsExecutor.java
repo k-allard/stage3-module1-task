@@ -3,13 +3,13 @@ package com.mjc.school;
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.controller.impl.NewsControllerImpl;
 import com.mjc.school.exceptions.IdShouldBeNumberException;
-import com.mjc.school.service.exceptions.AuthorNotFoundException;
-import com.mjc.school.service.exceptions.NewsContentInvalidException;
-import com.mjc.school.service.exceptions.NewsNotFoundException;
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTOResponse;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
-import com.mjc.school.service.exceptions.NewsTitleInvalidException;
+import com.mjc.school.common.exceptions.AuthorNotFoundException;
+import com.mjc.school.common.exceptions.NewsContentInvalidException;
+import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.common.dto.NewsCreateDTORequest;
+import com.mjc.school.common.dto.NewsDTO;
+import com.mjc.school.common.dto.NewsUpdateDTORequest;
+import com.mjc.school.common.exceptions.NewsTitleInvalidException;
 
 public class CommandsExecutor {
 
@@ -29,7 +29,7 @@ public class CommandsExecutor {
         System.out.println(command.description);
         switch (command) {
             case GET_ALL -> {
-                for (NewsDTOResponse news : newsController.getAllNews()) {
+                for (NewsDTO news : newsController.getAllNews()) {
                     System.out.println(news);
                 }
             }

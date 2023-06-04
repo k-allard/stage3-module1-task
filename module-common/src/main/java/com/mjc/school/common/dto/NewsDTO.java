@@ -1,4 +1,4 @@
-package com.mjc.school.service.dto;
+package com.mjc.school.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewsDTOResponse {
+public class NewsDTO {
     Long id;
     String title;
     String content;

@@ -1,10 +1,10 @@
 package com.mjc.school;
 
 import com.mjc.school.exceptions.IdShouldBeNumberException;
-import com.mjc.school.service.exceptions.AuthorNotFoundException;
-import com.mjc.school.service.exceptions.NewsContentInvalidException;
-import com.mjc.school.service.exceptions.NewsNotFoundException;
-import com.mjc.school.service.exceptions.NewsTitleInvalidException;
+import com.mjc.school.common.exceptions.AuthorNotFoundException;
+import com.mjc.school.common.exceptions.NewsContentInvalidException;
+import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.common.exceptions.NewsTitleInvalidException;
 
 public class MainApplication {
 
