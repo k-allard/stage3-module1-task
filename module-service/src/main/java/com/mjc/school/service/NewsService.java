@@ -19,5 +19,5 @@ public interface NewsService {
 
     NewsDTO update(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 
-    boolean delete(Long id) throws NewsNotFoundException;
+    Boolean delete(Long id) throws NewsNotFoundException;
 }

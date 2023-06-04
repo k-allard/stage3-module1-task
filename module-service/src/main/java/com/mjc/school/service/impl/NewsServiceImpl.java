@@ -77,7 +77,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public boolean delete(Long id) throws NewsNotFoundException {
+    public Boolean delete(Long id) throws NewsNotFoundException {
         return newsRepository.deleteById(id);
     }
 }
