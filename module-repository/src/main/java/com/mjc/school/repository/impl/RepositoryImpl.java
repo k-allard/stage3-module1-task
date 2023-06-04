@@ -45,7 +45,7 @@ public class RepositoryImpl implements Repository<NewsModel> {
     }
 
     @Override
-    public boolean deleteById(Long id) throws NewsNotFoundException {
+    public Boolean deleteById(Long id) throws NewsNotFoundException {
         checkNewsId(id);
         return dataSource.getNewsModelList().remove(new NewsModel(id));
     }

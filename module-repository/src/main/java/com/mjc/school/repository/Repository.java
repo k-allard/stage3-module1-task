@@ -15,7 +15,7 @@ public interface Repository<T> {
 
     T update(T data) throws NewsNotFoundException, AuthorNotFoundException;
 
-    boolean deleteById(Long id) throws NewsNotFoundException;
+    Boolean deleteById(Long id) throws NewsNotFoundException;
 
     int getNextId();
 }
