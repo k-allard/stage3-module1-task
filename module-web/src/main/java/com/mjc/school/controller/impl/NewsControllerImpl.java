@@ -20,18 +20,18 @@ public class NewsControllerImpl implements NewsController {
 
     @Override
     public List<NewsDTO> getAllNews() {
-        return newsService.getAllNews();
+        return newsService.readAll();
     }
 
     @Override
     public NewsDTO getNewsById(Long id) throws NewsNotFoundException {
-        return newsService.getNewsById(id);
+        return newsService.readById(id);
     }
 
     @Override
     public NewsDTO createNews(NewsCreateDTORequest news) throws
             NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException {
-        return newsService.createNews(news);
+        return newsService.create(news);
     }
 
     @Override
@@ -40,11 +40,11 @@ public class NewsControllerImpl implements NewsController {
             NewsNotFoundException,
             NewsTitleInvalidException,
             NewsContentInvalidException {
-        return newsService.updateNews(news);
+        return newsService.update(news);
     }
 
     @Override
     public boolean removeNews(Long id) throws NewsNotFoundException {
-        return newsService.removeNews(id);
+        return newsService.delete(id);
     }
 }

@@ -11,13 +11,13 @@ import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 import java.util.List;
 
 public interface NewsService {
-    List<NewsDTO> getAllNews();
+    List<NewsDTO> readAll();
 
-    NewsDTO getNewsById(Long id) throws NewsNotFoundException;
+    NewsDTO readById(Long id) throws NewsNotFoundException;
 
-    NewsDTO createNews(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
+    NewsDTO create(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
 
-    NewsDTO updateNews(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
+    NewsDTO update(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 
-    boolean removeNews(Long id) throws NewsNotFoundException;
+    boolean delete(Long id) throws NewsNotFoundException;
 }

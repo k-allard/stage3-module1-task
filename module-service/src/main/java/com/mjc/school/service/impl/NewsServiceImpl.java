@@ -20,64 +20,64 @@ import java.util.List;
 
 public class NewsServiceImpl implements NewsService {
 
+    private final NewsRequestDTOValidator newsValidator = new NewsRequestDTOValidator();
+
+    private final Repository<NewsModel> newsRepository = new RepositoryImpl();
+
     private final NewsModelDTOMapper mapper = new NewsModelDTOMapper();
 
-    private final NewsRequestDTOValidator validator = new NewsRequestDTOValidator();
-
-    private final Repository<NewsModel> repository = new RepositoryImpl();
-
     @Override
-    public List<NewsDTO> getAllNews() {
+    public List<NewsDTO> readAll() {
         List<NewsDTO> newsDTOList = new ArrayList<>();
-        for (NewsModel newsModel : repository.readAll()) {
+        for (NewsModel newsModel : newsRepository.readAll()) {
             newsDTOList.add(mapper.mapModelToDto(newsModel));
         }
         return newsDTOList;
     }
 
     @Override
-    public NewsDTO getNewsById(Long id) throws NewsNotFoundException {
-        NewsModel newsModel = repository.readById(id);
+    public NewsDTO readById(Long id) throws NewsNotFoundException {
+        NewsModel newsModel = newsRepository.readById(id);
         return mapper.mapModelToDto(newsModel);
     }
 
     @Override
-    public NewsDTO createNews(NewsCreateDTORequest news) throws
+    public NewsDTO create(NewsCreateDTORequest news) throws
             NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException {
 
-        validator.validateNewsCreateDTORequest(news);
+        newsValidator.validateNewsCreateDTORequest(news);
 
         NewsDTO newNews =
                 new NewsDTO(
-                        (long) repository.getNextId(),
+                        (long) newsRepository.getNextId(),
                         news.getTitle(),
                         news.getContent(),
                         LocalDateTime.now(),
                         LocalDateTime.now(),
                         news.getAuthorId());
-        return mapper.mapModelToDto(repository.create(
+        return mapper.mapModelToDto(newsRepository.create(
                 mapper.mapDtoToModel(newNews)
         ));
     }
 
     @Override
-    public NewsDTO updateNews(NewsUpdateDTORequest news) throws
+    public NewsDTO update(NewsUpdateDTORequest news) throws
             NewsNotFoundException,
             AuthorNotFoundException,
             NewsTitleInvalidException,
             NewsContentInvalidException {
 
-        validator.validateNewsUpdateDTORequest(news);
+        newsValidator.validateNewsUpdateDTORequest(news);
 
         return mapper.mapModelToDto(
-                repository.update(
+                newsRepository.update(
                         mapper.mapRequestDtoToModel(news)
                 ));
     }
 
     @Override
-    public boolean removeNews(Long id) throws NewsNotFoundException {
-        return repository.deleteById(id);
+    public boolean delete(Long id) throws NewsNotFoundException {
+        return newsRepository.deleteById(id);
     }
 }
