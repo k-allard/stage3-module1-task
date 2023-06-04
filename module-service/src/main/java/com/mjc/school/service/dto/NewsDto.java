@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewsDTO {
+public class NewsDto {
     Long id;
     String title;
     String content;

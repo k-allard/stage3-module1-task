@@ -4,8 +4,8 @@ import com.mjc.school.repository.Repository;
 import com.mjc.school.repository.impl.RepositoryImpl;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.NewsService;
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsCreateDtoRequest;
+import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsServiceImpl implements NewsService {
+public class NewsServiceImpl implements NewsService<NewsDto> {
 
     private final NewsRequestDTOValidator newsValidator = new NewsRequestDTOValidator();
 
@@ -27,29 +27,29 @@ public class NewsServiceImpl implements NewsService {
     private final NewsModelDTOMapper mapper = new NewsModelDTOMapper();
 
     @Override
-    public List<NewsDTO> readAll() {
-        List<NewsDTO> newsDTOList = new ArrayList<>();
+    public List<NewsDto> readAll() {
+        List<NewsDto> newsDtoList = new ArrayList<>();
         for (NewsModel newsModel : newsRepository.readAll()) {
-            newsDTOList.add(mapper.mapModelToDto(newsModel));
+            newsDtoList.add(mapper.mapModelToDto(newsModel));
         }
-        return newsDTOList;
+        return newsDtoList;
     }
 
     @Override
-    public NewsDTO readById(Long id) throws NewsNotFoundException {
+    public NewsDto readById(Long id) throws NewsNotFoundException {
         NewsModel newsModel = newsRepository.readById(id);
         return mapper.mapModelToDto(newsModel);
     }
 
     @Override
-    public NewsDTO create(NewsCreateDTORequest news) throws
+    public NewsDto create(NewsCreateDtoRequest news) throws
             NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException {
 
         newsValidator.validateNewsCreateDTORequest(news);
 
-        NewsDTO newNews =
-                new NewsDTO(
+        NewsDto newNews =
+                new NewsDto(
                         (long) newsRepository.getNextId(),
                         news.getTitle(),
                         news.getContent(),
@@ -62,7 +62,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDTO update(NewsUpdateDTORequest news) throws
+    public NewsDto update(NewsUpdateDTORequest news) throws
             NewsNotFoundException,
             AuthorNotFoundException,
             NewsTitleInvalidException,

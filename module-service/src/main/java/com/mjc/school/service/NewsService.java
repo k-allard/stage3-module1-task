@@ -1,7 +1,6 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsCreateDtoRequest;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
@@ -10,14 +9,14 @@ import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 import java.util.List;
 
-public interface NewsService {
-    List<NewsDTO> readAll();
+public interface NewsService<T> {
+    List<T> readAll();
 
-    NewsDTO readById(Long id) throws NewsNotFoundException;
+    T readById(Long id) throws NewsNotFoundException;
 
-    NewsDTO create(NewsCreateDTORequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
+    T create(NewsCreateDtoRequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
 
-    NewsDTO update(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
+    T update(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 
     Boolean delete(Long id) throws NewsNotFoundException;
 }

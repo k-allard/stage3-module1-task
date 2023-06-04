@@ -6,14 +6,14 @@ import com.mjc.school.exceptions.IdShouldBeNumberException;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsCreateDtoRequest;
+import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
 import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 public class CommandsExecutor {
 
-    private final NewsController newsController = new NewsControllerImpl();
+    private final NewsController<NewsDto> newsController = new NewsControllerImpl();
 
     private final TerminalCommandsReader commandsReader = new TerminalCommandsReader();
 
@@ -29,17 +29,17 @@ public class CommandsExecutor {
         System.out.println(command.description);
         switch (command) {
             case GET_ALL -> {
-                for (NewsDTO news : newsController.getAllNews()) {
+                for (NewsDto news : newsController.readAllNews()) {
                     System.out.println(news);
                 }
             }
             case GET_BY_ID -> System.out.println(
-                    newsController.getNewsById(
+                    newsController.readById(
                             requestNewsId()
                     ));
             case CREATE -> System.out.println(
                     newsController.createNews(
-                            new NewsCreateDTORequest(
+                            new NewsCreateDtoRequest(
                                     requestNewsTitle(),
                                     requestNewsContent(),
                                     requestAuthorId()
@@ -53,7 +53,7 @@ public class CommandsExecutor {
                                     requestAuthorId()
                             )));
             case REMOVE_BY_ID -> System.out.println(
-                    newsController.removeNews(
+                    newsController.deleteNews(
                             requestNewsId()
                     ));
         }

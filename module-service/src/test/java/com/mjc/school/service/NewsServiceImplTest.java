@@ -1,7 +1,7 @@
 package com.mjc.school.service;
 
-import com.mjc.school.service.dto.NewsCreateDTORequest;
-import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsCreateDtoRequest;
+import com.mjc.school.service.dto.NewsDto;
 import com.mjc.school.service.dto.NewsUpdateDTORequest;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
@@ -30,19 +30,19 @@ class NewsServiceImplTest {
             "is sensationalism, the disproportionate focus on, and exaggeration of, emotive stories for public " +
             "consumption. This news is also not unrelated to gossip, the human practice of sharing information.";
 
-    private final NewsService newsService = new NewsServiceImpl();
+    private final NewsService<NewsDto> newsService = new NewsServiceImpl();
 
     @Test
     @DisplayName("getAllNews() returns initial list of news")
     void getAllNews() {
-        List<NewsDTO> list = newsService.readAll();
+        List<NewsDto> list = newsService.readAll();
         assertEquals(NEWS_INITIAL_NUMBER, list.size());
     }
 
     @Test
     @DisplayName("getNewsById() returns correct news")
     void getNewsByValidId() throws NewsNotFoundException {
-        NewsDTO news = newsService.readById(VALID_NEWS_ID);
+        NewsDto news = newsService.readById(VALID_NEWS_ID);
         assertEquals(VALID_NEWS_ID, news.getId());
     }
 
@@ -57,8 +57,8 @@ class NewsServiceImplTest {
     @DisplayName("createNews() returns new news")
     void createValidNewsAndCheckResponse() throws NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException {
-        NewsDTO response = newsService.create(
-                new NewsCreateDTORequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
+        NewsDto response = newsService.create(
+                new NewsCreateDtoRequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
         assertEquals(VALID_NEWS_TITLE, response.getTitle());
         assertEquals(VALID_NEWS_CONTENT, response.getContent());
@@ -69,10 +69,10 @@ class NewsServiceImplTest {
     @DisplayName("createNews() saves new news")
     void createValidNewsAndCheckThatItWasWrittenToRepo() throws NewsTitleInvalidException,
             NewsContentInvalidException, NewsNotFoundException, AuthorNotFoundException {
-        NewsDTO responseOfCreate = newsService.create(
-                new NewsCreateDTORequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
+        NewsDto responseOfCreate = newsService.create(
+                new NewsCreateDtoRequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
-        NewsDTO responseByGet = newsService.readById(responseOfCreate.getId());
+        NewsDto responseByGet = newsService.readById(responseOfCreate.getId());
         assertEquals(VALID_NEWS_TITLE, responseByGet.getTitle());
         assertEquals(VALID_NEWS_CONTENT, responseByGet.getContent());
         assertEquals(VALID_AUTHOR_ID, responseOfCreate.getAuthorId());
@@ -82,28 +82,28 @@ class NewsServiceImplTest {
     @DisplayName("createNews() with invalid title fails")
     void createNewsWithInvalidTitle() {
         assertThrows(NewsTitleInvalidException.class, () -> newsService.create(
-                new NewsCreateDTORequest(INVALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
+                new NewsCreateDtoRequest(INVALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
     }
 
     @Test
     @DisplayName("createNews() with invalid content fails")
     void createNewsWithInvalidContent() {
         assertThrows(NewsContentInvalidException.class, () -> newsService.create(
-                new NewsCreateDTORequest(VALID_NEWS_TITLE, INVALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
+                new NewsCreateDtoRequest(VALID_NEWS_TITLE, INVALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
     }
 
     @Test
     @DisplayName("createNews() with invalid authorId fails")
     void createNewsWithInvalidAuthorId() {
         assertThrows(AuthorNotFoundException.class, () -> newsService.create(
-                new NewsCreateDTORequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, INVALID_AUTHOR_ID)));
+                new NewsCreateDtoRequest(VALID_NEWS_TITLE, VALID_NEWS_CONTENT, INVALID_AUTHOR_ID)));
     }
 
     @Test
     @DisplayName("updateNews() returns updated news")
     void updateValidNewsAndCheckResponse() throws NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException, NewsNotFoundException {
-        NewsDTO response = newsService.update(
+        NewsDto response = newsService.update(
                 new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
         assertEquals(VALID_NEWS_ID, response.getId());
@@ -116,10 +116,10 @@ class NewsServiceImplTest {
     @DisplayName("updateNews() saves updates")
     void updateValidNewsAndCheckThatItWasWrittenToRepo() throws NewsTitleInvalidException,
             NewsContentInvalidException, NewsNotFoundException, AuthorNotFoundException {
-        NewsDTO responseOfUpdate = newsService.update(
+        NewsDto responseOfUpdate = newsService.update(
                 new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
-        NewsDTO responseByGet = newsService.readById(responseOfUpdate.getId());
+        NewsDto responseByGet = newsService.readById(responseOfUpdate.getId());
         assertEquals(VALID_NEWS_ID, responseByGet.getId());
         assertEquals(VALID_NEWS_TITLE, responseByGet.getTitle());
         assertEquals(VALID_NEWS_CONTENT, responseByGet.getContent());
