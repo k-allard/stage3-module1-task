@@ -1,8 +1,8 @@
 package com.mjc.school.service.mapper;
 
 import com.mjc.school.repository.model.NewsModel;
-import com.mjc.school.common.dto.NewsDTO;
-import com.mjc.school.common.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsUpdateDTORequest;
 import org.modelmapper.ModelMapper;
 
 public class NewsModelDTOMapper {

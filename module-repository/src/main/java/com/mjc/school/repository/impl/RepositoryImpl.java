@@ -1,7 +1,7 @@
 package com.mjc.school.repository.impl;
 
-import com.mjc.school.common.exceptions.AuthorNotFoundException;
-import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.repository.exceptions.AuthorNotFoundException;
+import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.repository.utils.DataSource;
 import com.mjc.school.repository.Repository;

@@ -1,4 +1,4 @@
-package com.mjc.school.common.exceptions;
+package com.mjc.school.service.exceptions;
 
 public class NewsContentInvalidException extends Exception {
     public NewsContentInvalidException(String errorMessage) {

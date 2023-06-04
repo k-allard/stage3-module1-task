@@ -1,4 +1,4 @@
-package com.mjc.school.common.exceptions;
+package com.mjc.school.repository.exceptions;
 
 public class NewsNotFoundException extends Exception {
     public NewsNotFoundException(String errorMessage) {

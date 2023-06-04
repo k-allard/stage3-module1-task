@@ -3,4 +3,6 @@ version = '0.0.1-SNAPSHOT'
 dependencies {
     implementation project(':module-web')
     implementation project(path: ':module-common')
+    implementation project(path: ':module-service')
+    implementation project(path: ':module-repository')
 }

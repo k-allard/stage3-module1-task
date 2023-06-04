@@ -1,7 +1,7 @@
 package com.mjc.school.repository;
 
-import com.mjc.school.common.exceptions.AuthorNotFoundException;
-import com.mjc.school.common.exceptions.NewsNotFoundException;
+import com.mjc.school.repository.exceptions.AuthorNotFoundException;
+import com.mjc.school.repository.exceptions.NewsNotFoundException;
 
 import java.util.List;
 

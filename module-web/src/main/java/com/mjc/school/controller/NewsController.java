@@ -1,12 +1,12 @@
 package com.mjc.school.controller;
 
-import com.mjc.school.common.exceptions.AuthorNotFoundException;
-import com.mjc.school.common.exceptions.NewsNotFoundException;
-import com.mjc.school.common.exceptions.NewsContentInvalidException;
-import com.mjc.school.common.dto.NewsCreateDTORequest;
-import com.mjc.school.common.dto.NewsDTO;
-import com.mjc.school.common.dto.NewsUpdateDTORequest;
-import com.mjc.school.common.exceptions.NewsTitleInvalidException;
+import com.mjc.school.repository.exceptions.AuthorNotFoundException;
+import com.mjc.school.repository.exceptions.NewsNotFoundException;
+import com.mjc.school.service.exceptions.NewsContentInvalidException;
+import com.mjc.school.service.dto.NewsCreateDTORequest;
+import com.mjc.school.service.dto.NewsDTO;
+import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 import java.util.List;
 
