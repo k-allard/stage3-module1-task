@@ -6,7 +6,7 @@ import com.mjc.school.repository.model.NewsModel;
 import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsCreateDtoRequest;
 import com.mjc.school.service.dto.NewsDto;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsUpdateDtoRequest;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
@@ -62,7 +62,7 @@ public class NewsServiceImpl implements NewsService<NewsDto> {
     }
 
     @Override
-    public NewsDto update(NewsUpdateDTORequest news) throws
+    public NewsDto update(NewsUpdateDtoRequest news) throws
             NewsNotFoundException,
             AuthorNotFoundException,
             NewsTitleInvalidException,

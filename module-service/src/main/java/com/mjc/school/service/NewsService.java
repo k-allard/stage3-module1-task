@@ -1,7 +1,7 @@
 package com.mjc.school.service;
 
 import com.mjc.school.service.dto.NewsCreateDtoRequest;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsUpdateDtoRequest;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
@@ -16,7 +16,7 @@ public interface NewsService<T> {
 
     T create(NewsCreateDtoRequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
 
-    T update(NewsUpdateDTORequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
+    T update(NewsUpdateDtoRequest news) throws NewsNotFoundException, AuthorNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 
     Boolean delete(Long id) throws NewsNotFoundException;
 }

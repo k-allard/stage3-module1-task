@@ -4,7 +4,7 @@ import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.service.dto.NewsCreateDtoRequest;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsUpdateDtoRequest;
 import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface NewsController<T> {
 
     T createNews(NewsCreateDtoRequest news) throws NewsTitleInvalidException, NewsContentInvalidException, AuthorNotFoundException;
 
-    T updateNews(NewsUpdateDTORequest news) throws AuthorNotFoundException, NewsNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
+    T updateNews(NewsUpdateDtoRequest news) throws AuthorNotFoundException, NewsNotFoundException, NewsTitleInvalidException, NewsContentInvalidException;
 
     Boolean deleteNews(Long id) throws NewsNotFoundException;
 

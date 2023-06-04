@@ -2,7 +2,7 @@ package com.mjc.school.service;
 
 import com.mjc.school.service.dto.NewsCreateDtoRequest;
 import com.mjc.school.service.dto.NewsDto;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsUpdateDtoRequest;
 import com.mjc.school.repository.exceptions.AuthorNotFoundException;
 import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
@@ -104,7 +104,7 @@ class NewsServiceImplTest {
     void updateValidNewsAndCheckResponse() throws NewsTitleInvalidException,
             NewsContentInvalidException, AuthorNotFoundException, NewsNotFoundException {
         NewsDto response = newsService.update(
-                new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
+                new NewsUpdateDtoRequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
         assertEquals(VALID_NEWS_ID, response.getId());
         assertEquals(VALID_NEWS_TITLE, response.getTitle());
@@ -117,7 +117,7 @@ class NewsServiceImplTest {
     void updateValidNewsAndCheckThatItWasWrittenToRepo() throws NewsTitleInvalidException,
             NewsContentInvalidException, NewsNotFoundException, AuthorNotFoundException {
         NewsDto responseOfUpdate = newsService.update(
-                new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
+                new NewsUpdateDtoRequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)
         );
         NewsDto responseByGet = newsService.readById(responseOfUpdate.getId());
         assertEquals(VALID_NEWS_ID, responseByGet.getId());
@@ -130,28 +130,28 @@ class NewsServiceImplTest {
     @DisplayName("updateNews() with invalid id fails")
     void updateNewsWithInvalidId() {
         assertThrows(NewsNotFoundException.class, () -> newsService.update(
-                new NewsUpdateDTORequest(INVALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
+                new NewsUpdateDtoRequest(INVALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
     }
 
     @Test
     @DisplayName("updateNews() with invalid title fails")
     void updateNewsWithInvalidTitle() {
         assertThrows(NewsTitleInvalidException.class, () -> newsService.update(
-                new NewsUpdateDTORequest(VALID_NEWS_ID, INVALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
+                new NewsUpdateDtoRequest(VALID_NEWS_ID, INVALID_NEWS_TITLE, VALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
     }
 
     @Test
     @DisplayName("updateNews() with invalid content fails")
     void updateNewsWithInvalidContent() {
         assertThrows(NewsContentInvalidException.class, () -> newsService.update(
-                new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, INVALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
+                new NewsUpdateDtoRequest(VALID_NEWS_ID, VALID_NEWS_TITLE, INVALID_NEWS_CONTENT, VALID_AUTHOR_ID)));
     }
 
     @Test
     @DisplayName("updateNews() with invalid authorId fails")
     void updateNewsWithInvalidAuthorId() {
         assertThrows(AuthorNotFoundException.class, () -> newsService.update(
-                new NewsUpdateDTORequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, INVALID_AUTHOR_ID)));
+                new NewsUpdateDtoRequest(VALID_NEWS_ID, VALID_NEWS_TITLE, VALID_NEWS_CONTENT, INVALID_AUTHOR_ID)));
     }
 
     @Test

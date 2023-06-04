@@ -8,7 +8,7 @@ import com.mjc.school.service.exceptions.NewsContentInvalidException;
 import com.mjc.school.repository.exceptions.NewsNotFoundException;
 import com.mjc.school.service.dto.NewsCreateDtoRequest;
 import com.mjc.school.service.dto.NewsDto;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsUpdateDtoRequest;
 import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 public class CommandsExecutor {
@@ -46,7 +46,7 @@ public class CommandsExecutor {
                             )));
             case UPDATE -> System.out.println(
                     newsController.updateNews(
-                            new NewsUpdateDTORequest(
+                            new NewsUpdateDtoRequest(
                                     requestNewsId(),
                                     requestNewsTitle(),
                                     requestNewsContent(),

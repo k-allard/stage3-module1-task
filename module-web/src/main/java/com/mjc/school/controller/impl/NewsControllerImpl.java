@@ -8,7 +8,7 @@ import com.mjc.school.service.NewsService;
 import com.mjc.school.service.impl.NewsServiceImpl;
 import com.mjc.school.service.dto.NewsCreateDtoRequest;
 import com.mjc.school.service.dto.NewsDto;
-import com.mjc.school.service.dto.NewsUpdateDTORequest;
+import com.mjc.school.service.dto.NewsUpdateDtoRequest;
 import com.mjc.school.service.exceptions.NewsTitleInvalidException;
 
 
@@ -35,7 +35,7 @@ public class NewsControllerImpl implements NewsController<NewsDto> {
     }
 
     @Override
-    public NewsDto updateNews(NewsUpdateDTORequest news) throws
+    public NewsDto updateNews(NewsUpdateDtoRequest news) throws
             AuthorNotFoundException,
             NewsNotFoundException,
             NewsTitleInvalidException,
